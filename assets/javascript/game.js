@@ -21,6 +21,7 @@ document.onkeyup = function(event) {
         }
 
         else if (numGuesses === 0) {
+            losses++;
             resetGame();
         }
 
