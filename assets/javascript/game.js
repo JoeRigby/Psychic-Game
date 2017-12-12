@@ -1,39 +1,33 @@
     
 var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
 
- var wins = 0;
- var losses = 0;
- var numGuesses = 10;
- var guessChoices = [];
- var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+var wins = 0;
+var losses = 0;
+var numGuesses;
+var guessChoices;
 
- console.log(computerGuess);
+resetGame();
 
- document.onkeyup = function(event) {
-    var userGuess = event.key;
+document.onkeyup = function(event) {
+   var userGuess = event.key;
 
-//    var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-
-    var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
+   var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
     
-
     if (options.indexOf(userGuess) > -1) {
 
         if (userGuess === computerGuess) {
             wins++;
-            numGuesses = 10;
-            guessChoices = [];
+            resetGame();
         }
 
-        if (userGuess != computerGuess) {
+        else if (numGuesses === 0) {
+            losses++;
+            resetGame();
+        }
+
+        else {
             numGuesses --;
             guessChoices.push(userGuess);
-        }
-
-        if (numGuesses === 0) {
-            numGuesses = 10;
-            losses ++;
-            guessChoices = [];
         }
 
     var html = 
@@ -45,7 +39,13 @@ var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l
     "<p>Your Guesses so far: " + guessChoices.join(", ") + "</p>";
 
     document.querySelector("#game").innerHTML = html;
-
-    
     }
 };
+
+function resetGame() {
+  guessChoices = [];
+  numGuesses = 10;
+  // This is where a randon letter is selected    
+  computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+  console.log("Letter to guess: " + computerGuess);
+}
